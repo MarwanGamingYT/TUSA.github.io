@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أكد دعمك</title>
+  <!-- Import Lateef Font -->
+  <link href="https://fonts.googleapis.com/earlyaccess/lateef.css" rel="stylesheet">
+  <style>
+    /* General Reset */
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      font-family: 'Lateef', serif;
+    }
+
+    /* Card Styling */
+    .card {
+      position: relative;
+      width: 220px;
+      height: 320px;
+      background: linear-gradient(135deg, darkgreen, lightgreen);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      font-weight: bold;
+      color: white;
+      border-radius: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    /* Corner Effects */
+    .card::before,
+    .card::after {
+      position: absolute;
+      content: "";
+      width: 20%;
+      height: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      font-weight: bold;
+      background-color: rgba(255, 255, 255, 0.3);
+      transition: all 0.5s;
+    }
+
+    .card::before {
+      top: 0;
+      right: 0;
+      border-radius: 0 15px 0 100%;
+    }
+
+    .card::after {
+      bottom: 0;
+      left: 0;
+      border-radius: 0 100% 0 15px;
+    }
+
+    /* Hover Effects */
+    .card:hover::before,
+    .card:hover::after {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      transition: all 0.5s;
+    }
+
+    .card:hover::after {
+      content: "🤍";
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="card" onclick="navigateToPage()">اضغط لتأكيد دعمك</div>
+
+  <script>
+    function navigateToPage() {
+      // Replace 'page.html' with the URL or path of the page you want to load
+      window.location.href = 'page.html';
+    }
+  </script>
+</body>
+</html>
