@@ -45,7 +45,7 @@
     body {
       font-family: 'Lateef', serif;
       font-size: 25px;
-      background: var(--light);
+      background: #f8f9fa;
       overflow-x: hidden;
       min-height: 100vh;
     }
@@ -152,6 +152,8 @@
       cursor: pointer;
       margin: 1rem 0;
       transition: transform 0.3s ease;
+      role: button;
+      tabindex: 0;
     }
 
     .star-icon:hover {
@@ -303,49 +305,32 @@
       }
     }
 
-    /* Floating Instagram FAB with Click Animation */
-    .fab-instagram {
+    /* Floating Action Button for Instagram */
+    .fab-button {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #C13584;
+      background: var(--primary);
       color: white;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+      padding: 0.8rem 1.2rem;
+      border-radius: 50px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(193, 53, 132, 0.3);
-      z-index: 10000;
+      /* In RTL, row-reverse displays the icon on the right */
+      flex-direction: row-reverse;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+      z-index: 3000;
       text-decoration: none;
-      overflow: hidden;
-      transition: width 0.4s ease;
-      cursor: pointer;
+      transition: transform 0.3s ease;
     }
-    .fab-instagram i {
-      font-size: 28px;
-      transition: transform 0.4s ease;
+
+    .fab-button:hover {
+      transform: scale(1.05);
     }
-    .fab-instagram span {
-      margin-left: 10px;
-      opacity: 0;
-      font-size: 18px;
-      white-space: nowrap;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      transform: translateX(-20px);
-    }
-    /* Active state: عند النقر يظهر النص مع تأثير دوران للأيقونة */
-    .fab-instagram.active {
-      width: 180px;
-      background: #C13584;
-    }
-    .fab-instagram.active i {
-      transform: rotate(360deg);
-    }
-    .fab-instagram.active span {
-      opacity: 1;
-      transform: translateX(0);
+
+    .fab-button i {
+      font-size: 1.5rem;
     }
   </style>
 </head>
@@ -364,12 +349,10 @@
     </div>
 
     <div class="content-box hadith-text">
-      <p>
-        عن حديث أنس بن مالك (رضي الله عنه) قال: قال رسول الله (صلى الله عليه وسلم):
-        "انصر أخاكَ ظالماً أو مظلوماً، فقال رجل: يا رسول الله، أنصره إذا كان مظلوماً،
-        افرأيتَ إذا كان ظالماً كيف أنصره؟ قال: تحجزه أو تمنعه من الظلم فإن ذلك نصره"
-        | رواه البخاري
-      </p>
+      <p>عن حديث أنس بن مالك (رضي الله عنه) قال: قال رسول الله (صلى الله عليه وسلم): 
+      "انصر أخاكَ ظالماً أو مظلوماً، فقال رجل: يا رسول الله، أنصره إذا كان مظلوماً، 
+      افرأيتَ إذا كان ظالماً كيف أنصره؟ قال: تحجزه أو تمنعه من الظلم فإن ذلك نصره" 
+      | رواه البخاري</p>
     </div>
 
     <div class="actions-section">
@@ -381,9 +364,7 @@
             <i class="fas fa-download"></i>
             تنزيل التطبيق
           </a>
-          <p class="download-note">
-            تحتوي التطبيقات المدرجة في قائمة التنزيل على بدائل وهنالك بدائل محلية منتشرة بالأسواق خاصةً منتجات الحاجة اليومية ويمكن أيضاً فحص أي منتج شركة بواسطة فاحص الباركود ومعرفة كونه منتج مقاطعة أو لا
-          </p>
+          <p class="download-note">تحتوي التطبيقات المدرجة في قائمة التنزيل على بدائل وهنالك بدائل محلية منتشرة بالأسواق خاصةً منتجات الحاجة اليومية ويمكن أيضاً فحص اي منتج شركة بواسطة فاحص الباركود ومعرفة كونه منتج مقاطعة أو لا</p>
         </div>
         <a href="#" class="main-button faq-btn" onclick="openPopup('faqPopup')">
           <i class="fas fa-question-circle"></i>
@@ -393,21 +374,15 @@
     </div>
   </main>
 
-  <!-- Floating Instagram FAB -->
-  <a href="javascript:void(0)" class="fab-instagram" onclick="handleFabClick()">
-    <i class="fab fa-instagram"></i>
-    <span>ادعمنا</span>
-  </a>
-
   <!-- Popups -->
   <div class="popup-overlay" id="infoPopup">
     <div class="popup-content">
       <h2 style="text-align: center; margin-bottom: 1rem;">معلومات الحملة</h2>
       <div class="content-box">
         <p>
-          توقف الحرب في غزة لا يعني انتهاء مبدأ المقاطعة لأن كينونة هذه الشركات لم تكن على مبدأ تهجمي واحد فقط،
-          فإن من دعم كياناً ساهم متمثلاً بأفعاله بأقصى أنواع عدم الإنسانية فهو من جنسه. فوجب أن نصحح المبدأ
-          بأن يكون استغناءاً تاماً وليس مقاطعة وقتية فقط، بل هي باب إنساني مهم. يمكنكم تنزيل التطبيق المرفق
+          توقف الحرب في غزة لا يعني انتهاء مبدأ المقاطعة لأن كينونة هذه الشركات لم تكن على مبدأ تهجمي واحد فقط، 
+          فإن من دعم كياناً ساهم متمثلاً بأفعاله بأقصى أنواع عدم الإنسانية فهو من جنسه. فوجب أن نصحح المبدأ 
+          بأن يكون استغناءاً تاماً وليس مقاطعة وقتية فقط، بل هي باب إنساني مهم. يمكنكم تنزيل التطبيق المرفق 
           بالصفحة الرئيسية من خلال الضغط على زر التنزيل لمعرفة المنتجات الداعمة للكيان.
         </p>
       </div>
@@ -459,8 +434,8 @@
         <div class="faq-item">
           <div class="question">شنو تأثير المقاطعة؟ او كوني شخص واحد شراح اسوي؟</div>
           <div class="answer">
-            تأثيرها كبير على طرفين: الأول مسألة الأرباح، وبذلك ينتج الطرف الثاني حيث تلاحظ الشركة
-            مسألة الدعم للطرف المعادي لها (الكيان) والخوف من هذا البلد. وكل شخص هو مجموعة بنفسه،
+            تأثيرها كبير على طرفين: الأول مسألة الأرباح، وبذلك ينتج الطرف الثاني حيث تلاحظ الشركة 
+            مسألة الدعم للطرف المعادي لها (الكيان) والخوف من هذا البلد. وكل شخص هو مجموعة بنفسه، 
             فواحد بواحد يصبحون مجموعة، فلا تستهين بالتأثير.
           </div>
         </div>
@@ -475,7 +450,7 @@
         <div class="faq-item">
           <div class="question">بعض المنتجات لا نستطيع الاستغناء عنها؟</div>
           <div class="answer">
-            دائماً يوجد بدائل لكل شركة، أما المنتجات الضرورية مثل شركات السيارات مثلاً،
+            دائماً يوجد بدائل لكل شركة، أما المنتجات الضرورية مثل شركات السيارات مثلاً، 
             هذه أمور نحتاجها وليس لها بدائل، فهنا تسقط المقاطعة.
           </div>
         </div>
@@ -490,7 +465,7 @@
         <div class="faq-item">
           <div class="question">هل المقاطعة تؤثر على العمال في هذه الشركات؟</div>
           <div class="answer">
-            التأثير الحقيقي يقع على الاحتلال والشركات الداعمة له، والمقاطعة تدفع هذه الشركات
+            التأثير الحقيقي يقع على الاحتلال والشركات الداعمة له، والمقاطعة تدفع هذه الشركات 
             لإعادة النظر في سياساتها.
           </div>
         </div>
@@ -498,7 +473,7 @@
         <div class="faq-item">
           <div class="question">إذا توقفت الحرب، هل نوقف المقاطعة؟</div>
           <div class="answer">
-            لا، المقاطعة ليست رد فعل مؤقت، الاحتلال لا يزال مستمرًا، والشركات التي دعمته سابقًا
+            لا، المقاطعة ليست رد فعل مؤقت، الاحتلال لا يزال مستمرًا، والشركات التي دعمته سابقًا 
             قد تعود لدعمه مستقبلاً.
           </div>
         </div>
@@ -514,6 +489,15 @@
     </div>
   </noscript>
 
+  <!-- Floating Action Button for Instagram -->
+  <a href="https://www.instagram.com/your-instagram-account" 
+     class="fab-button" 
+     target="_blank" 
+     rel="noopener noreferrer">
+    <i class="fab fa-instagram"></i>
+    <span>ادعمنا</span>
+  </a>
+
   <script>
     function openPopup(popupId) {
       const popup = document.getElementById(popupId);
@@ -525,18 +509,6 @@
       const popup = document.getElementById(popupId);
       popup.style.opacity = '0';
       setTimeout(() => popup.style.display = 'none', 300);
-    }
-
-    function handleFabClick() {
-      var fab = document.querySelector('.fab-instagram');
-      if (!fab.classList.contains('active')) {
-        // أضف حالة active لبدء الأنيميشن
-        fab.classList.add('active');
-        // بعد تأخير بسيط، يتم إعادة التوجيه إلى حساب إنستغرام
-        setTimeout(function() {
-          window.location.href = 'https://instagram.com/YourInstagramAccount';
-        }, 1000); // تأخير 1 ثانية
-      }
     }
 
     window.onclick = function(event) {
