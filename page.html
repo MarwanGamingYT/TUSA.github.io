@@ -303,7 +303,7 @@
       }
     }
 
-    /* Floating Instagram FAB with Animated Text */
+    /* Floating Instagram FAB with Click Animation */
     .fab-instagram {
       position: fixed;
       bottom: 20px;
@@ -318,25 +318,34 @@
       justify-content: center;
       box-shadow: 0 4px 15px rgba(193, 53, 132, 0.3);
       z-index: 10000;
-      overflow: hidden;
-      transition: width 0.3s ease;
       text-decoration: none;
+      overflow: hidden;
+      transition: width 0.4s ease;
+      cursor: pointer;
     }
     .fab-instagram i {
-      font-size: 24px;
+      font-size: 28px;
+      transition: transform 0.4s ease;
     }
     .fab-instagram span {
       margin-left: 10px;
       opacity: 0;
-      white-space: nowrap;
-      transition: opacity 0.3s ease;
       font-size: 18px;
+      white-space: nowrap;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateX(-20px);
     }
-    .fab-instagram:hover {
-      width: 160px;
+    /* Active state: عند النقر يظهر النص مع تأثير دوران للأيقونة */
+    .fab-instagram.active {
+      width: 180px;
+      background: #C13584;
     }
-    .fab-instagram:hover span {
+    .fab-instagram.active i {
+      transform: rotate(360deg);
+    }
+    .fab-instagram.active span {
       opacity: 1;
+      transform: translateX(0);
     }
   </style>
 </head>
@@ -385,7 +394,7 @@
   </main>
 
   <!-- Floating Instagram FAB -->
-  <a href="https://instagram.com/YourInstagramAccount" class="fab-instagram" target="_blank" rel="noopener noreferrer">
+  <a href="javascript:void(0)" class="fab-instagram" onclick="handleFabClick()">
     <i class="fab fa-instagram"></i>
     <span>ادعمنا</span>
   </a>
@@ -516,6 +525,18 @@
       const popup = document.getElementById(popupId);
       popup.style.opacity = '0';
       setTimeout(() => popup.style.display = 'none', 300);
+    }
+
+    function handleFabClick() {
+      var fab = document.querySelector('.fab-instagram');
+      if (!fab.classList.contains('active')) {
+        // أضف حالة active لبدء الأنيميشن
+        fab.classList.add('active');
+        // بعد تأخير بسيط، يتم إعادة التوجيه إلى حساب إنستغرام
+        setTimeout(function() {
+          window.location.href = 'https://instagram.com/YourInstagramAccount';
+        }, 1000); // تأخير 1 ثانية
+      }
     }
 
     window.onclick = function(event) {
