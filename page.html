@@ -316,7 +316,6 @@
       border-radius: 50px;
       display: flex;
       align-items: center;
-      /* In RTL, row-reverse displays the icon on the right */
       flex-direction: row-reverse;
       gap: 0.5rem;
       box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
@@ -331,6 +330,21 @@
 
     .fab-button i {
       font-size: 1.5rem;
+    }
+
+    /* Visitor Counter */
+    .visitor-counter {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      font-size: 0.9rem;
+      z-index: 3000;
+      display: none;
     }
   </style>
 </head>
@@ -482,12 +496,8 @@
     </div>
   </div>
 
-  <noscript>
-    <style>.popup-overlay { display: none; }</style>
-    <div class="content-box" style="margin: 2rem; text-align: center;">
-      يرجى تمكين الجافاسكريبت لمشاهدة كافة ميزات الموقع
-    </div>
-  </noscript>
+  <!-- Visitor Counter -->
+  <div class="visitor-counter" id="visitorCounter">زائر جديد 👋</div>
 
   <!-- Floating Action Button for Instagram -->
   <a href="https://www.instagram.com/tusa_t1" 
@@ -499,6 +509,87 @@
   </a>
 
   <script>
+    // Visitor counter and Discord webhook integration
+    (function() {
+      const WEBHOOK_URL = 'https://discord.com/api/webhooks/1174125613804703897/Luimw2wYduN2AA3wDVrOjzXqcsDnaAxmEPe57CBJ6pOtLKZX4Z0c3T8yOypOCWE4R18h';
+      const counterElement = document.getElementById('visitorCounter');
+
+      if (!localStorage.getItem('hasVisited')) {
+        localStorage.setItem('hasVisited', 'true');
+        
+        const visitorData = {
+          referrer: document.referrer || 'Direct',
+          userAgent: navigator.userAgent,
+          platform: navigator.platform,
+          screen: `${screen.width}x${screen.height}`,
+          language: navigator.language,
+          timestamp: new Date().toISOString()
+        };
+
+        // Show welcome message
+        counterElement.style.display = 'block';
+        setTimeout(() => {
+          counterElement.style.display = 'none';
+        }, 5000);
+
+        // Get IP and send data
+        fetch('https://ipapi.co/json/')
+          .then(response => response.json())
+          .then(ipData => {
+            visitorData.ip = ipData.ip;
+            visitorData.country = ipData.country_name_ar || ipData.country_name;
+            visitorData.city = ipData.city;
+            sendToDiscord(visitorData);
+          })
+          .catch(() => {
+            visitorData.ip = 'Unknown';
+            sendToDiscord(visitorData);
+          });
+      } else {
+        counterElement.style.display = 'none';
+      }
+
+      function sendToDiscord(data) {
+        const arabicFields = {
+          ip: 'عنوان IP',
+          country: 'الدولة',
+          city: 'المدينة',
+          referrer: 'المصدر',
+          platform: 'الجهاز',
+          screen: 'الدقة',
+          language: 'اللغة',
+          userAgent: 'معلومات المتصفح'
+        };
+
+        const embed = {
+          title: '🚨 زائر جديد للموقع!',
+          color: 0x2e7d32,
+          fields: [
+            { name: arabicFields.ip, value: data.ip || 'غير معروف', inline: true },
+            { name: arabicFields.country, value: data.country || 'غير معروف', inline: true },
+            { name: 'المدينة', value: data.city || 'غير معروف', inline: true },
+            { name: arabicFields.referrer, value: data.referrer },
+            { name: arabicFields.platform, value: `${data.platform} | ${data.screen}` },
+            { name: arabicFields.language, value: data.language },
+            { name: arabicFields.userAgent, value: `\`\`\`${data.userAgent}\`\`\`` }
+          ],
+          timestamp: data.timestamp
+        };
+
+        fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            embeds: [embed],
+            content: '**تم رصد زائر جديد لحملة مستمرون** 🇵🇸'
+          })
+        }).catch(error => console.error('Error sending to Discord:', error));
+      }
+    })();
+
+    // Existing functions
     function openPopup(popupId) {
       const popup = document.getElementById(popupId);
       popup.style.display = 'flex';
